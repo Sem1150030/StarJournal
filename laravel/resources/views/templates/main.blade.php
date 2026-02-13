@@ -41,7 +41,7 @@
                 @else
                     <div class="flex items-center space-x-4">
                         <a href="{{ route('login') }}" class="text-slate-600 hover:text-violet-600 transition-colors">Sign in</a>
-                        <a href="{{ route('login') }}" class="bg-violet-600 hover:bg-violet-500 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                        <a href="{{ route('register') }}" class="bg-violet-600 hover:bg-violet-500 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
                             Get Started
                         </a>
                     </div>

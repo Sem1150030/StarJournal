@@ -8,12 +8,29 @@
                 <div class="bg-white rounded-2xl shadow-lg p-8">
                     <div class="text-center mb-8">
                         <span class="text-3xl mb-4 block">✦</span>
-                        <h1 class="font-display text-3xl text-slate-900 mb-2">Welcome Back</h1>
-                        <p class="text-slate-500">Sign in to your StarJournal account</p>
+                        <h1 class="font-display text-3xl text-slate-900 mb-2">Create Account</h1>
+                        <p class="text-slate-500">Join the StarJournal community</p>
                     </div>
 
-                    <form method="POST" action="{{ route('authenticate') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('register.store') }}" class="space-y-6">
                         @csrf
+
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value="{{ old('name') }}"
+                                required
+                                autofocus
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all @error('name') border-red-500 @enderror"
+                                placeholder="John Doe"
+                            >
+                            @error('name')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
                         <div>
                             <label for="email" class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
@@ -23,7 +40,6 @@
                                 name="email"
                                 value="{{ old('email') }}"
                                 required
-                                autofocus
                                 class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all @error('email') border-red-500 @enderror"
                                 placeholder="you@example.com"
                             >
@@ -47,23 +63,27 @@
                             @enderror
                         </div>
 
-                        <div class="flex items-center justify-between">
-                            <label class="flex items-center">
-                                <input type="checkbox" name="remember" class="w-4 h-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500">
-                                <span class="ml-2 text-sm text-slate-600">Remember me</span>
-                            </label>
-                            <a href="#" class="text-sm text-violet-600 hover:text-violet-500 transition-colors">Forgot password?</a>
+                        <div>
+                            <label for="password_confirmation" class="block text-sm font-medium text-slate-700 mb-2">Confirm Password</label>
+                            <input
+                                type="password"
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                required
+                                class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all"
+                                placeholder="••••••••"
+                            >
                         </div>
 
                         <button type="submit" class="w-full bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25">
-                            Sign In
+                            Create Account
                         </button>
                     </form>
 
                     <div class="mt-8 text-center">
                         <p class="text-slate-500 text-sm">
-                            Don't have an account?
-                            <a href="{{ route('register') }}" class="text-violet-600 hover:text-violet-500 font-medium transition-colors">Get Started</a>
+                            Already have an account?
+                            <a href="{{ route('login') }}" class="text-violet-600 hover:text-violet-500 font-medium transition-colors">Sign In</a>
                         </p>
                     </div>
                 </div>
@@ -71,3 +91,4 @@
         </div>
     </section>
 @endsection
+
