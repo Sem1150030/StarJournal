@@ -40,18 +40,36 @@
                 @enderror
             </div>
 
-            {{-- Date Picker --}}
-            <div>
-                <label for="date" class="block text-sm font-medium text-slate-700 mb-2">Date</label>
-                <input
-                    type="date"
-                    id="date"
-                    wire:model="date"
-                    class="w-full max-w-xs px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all"
-                >
-                @error('date')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
+            {{-- Date Picker and Status --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label for="date" class="block text-sm font-medium text-slate-700 mb-2">Date</label>
+                    <input
+                        type="date"
+                        id="date"
+                        wire:model="date"
+                        class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all"
+                    >
+                    @error('date')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="status" class="block text-sm font-medium text-slate-700 mb-2">Status</label>
+                    <select
+                        id="status"
+                        wire:model="status"
+                        class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all bg-white"
+                    >
+                        @foreach($this->statusOptions as $option)
+                            <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
+                        @endforeach
+                    </select>
+                    @error('status')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
 
             {{-- CKEditor --}}

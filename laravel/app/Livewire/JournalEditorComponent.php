@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\JournalStatus;
 use App\Models\Journal;
 use App\Services\JournalService;
 use Illuminate\Support\Facades\Auth;
@@ -14,13 +15,18 @@ class JournalEditorComponent extends Component
     public Journal $journal;
     public string $title = '';
     public string $description = '';
+    public string $status = 'draft';
 
-    protected $rules = [
-        'title' => 'required|min:3|max:255',
-        'description' => 'nullable|max:500',
-        'content' => 'required',
-        'date' => 'required|date',
-    ];
+    protected function rules()
+    {
+        return [
+            'title' => 'required|min:3|max:255',
+            'description' => 'nullable|max:500',
+            'content' => 'required',
+            'date' => 'required|date',
+            'status' => 'required|in:' . implode(',', array_column(JournalStatus::cases(), 'value')),
+        ];
+    }
 
     public function mount(Journal $journal)
     {
@@ -29,7 +35,7 @@ class JournalEditorComponent extends Component
         $this->description = $journal->description ?? '';
         $this->content = $journal->content ?? '';
         $this->date = $journal->date->format('Y-m-d');
-
+        $this->status = $journal->status ?? 'draft';
     }
 
     public function save()
@@ -38,25 +44,20 @@ class JournalEditorComponent extends Component
 
         $journalService = app(JournalService::class);
 
-        if ($this->journalId) {
-            $journalService->updateJournal($this->journalId, [
-                'title' => $this->title,
-                'description' => $this->description,
-                'content' => $this->content,
-                'date' => $this->date,
-            ]);
-            $message = 'Journal entry updated successfully!';
-        } else {
-            $journalService->createJournal([
-                'title' => $this->title,
-                'description' => $this->description,
-                'content' => $this->content,
-                'date' => $this->date,
-            ]);
-            $message = 'Journal entry saved successfully!';
-        }
+        $journalService->updateJournal($this->journal->id, [
+            'title' => $this->title,
+            'description' => $this->description,
+            'content' => $this->content,
+            'date' => $this->date,
+            'status' => $this->status,
+        ]);
 
-        return redirect()->route('index')->with('success', $message);
+        return redirect()->route('index')->with('success', 'Journal entry updated successfully!');
+    }
+
+    public function getStatusOptionsProperty(): array
+    {
+        return JournalStatus::options();
     }
 
     public function render()

@@ -4,24 +4,11 @@ namespace App\Services;
 
 use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 class JournalService
 {
     public function createJournal(array $data): Journal
     {
-        $validator = Validator::make($data, [
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
-            'content' => 'nullable|string',
-            'date' => 'nullable|date',
-        ]);
-
-        if ($validator->fails()) {
-            throw new ValidationException($validator);
-        }
-
         return Journal::create([
             'user_id' => Auth::id(),
             'title' => $data['title'],
@@ -34,16 +21,6 @@ class JournalService
 
     public function updateJournal(int $journalId, array $data): Journal
     {
-        $validator = Validator::make($data, [
-            'title' => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string|max:500',
-            'content' => 'nullable|string',
-            'date' => 'nullable|date',
-        ]);
-
-        if ($validator->fails()) {
-            throw new ValidationException($validator);
-        }
 
         $journal = Journal::where('id', $journalId)
             ->where('user_id', Auth::id())
@@ -54,6 +31,7 @@ class JournalService
             'description' => $data['description'] ?? $journal->description,
             'content' => $data['content'] ?? $journal->content,
             'date' => $data['date'] ?? $journal->date,
+            'status' => $data['status'] ?? $journal->status,
         ]);
 
         return $journal->fresh();
