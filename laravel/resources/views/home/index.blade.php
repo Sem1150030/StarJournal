@@ -14,9 +14,12 @@
                     Discover inspiring stories, share your thoughts, and connect with a community of passionate writers from around the world.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#" class="bg-violet-600 hover:bg-violet-500 text-white px-8 py-3 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25">
+                    <button
+                        onclick="Livewire.dispatch('openModal', { component: 'journal.create-journal-modal' })"
+                        class="bg-violet-600 hover:bg-violet-500 text-white px-8 py-3 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25 cursor-pointer"
+                    >
                         Start Writing
-                    </a>
+                    </button>
                     <a href="#posts" class="border border-slate-300 hover:border-violet-400 text-slate-700 hover:text-violet-600 px-8 py-3 rounded-full font-medium transition-colors">
                         Explore Posts
                     </a>

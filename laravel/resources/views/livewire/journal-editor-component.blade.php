@@ -2,12 +2,44 @@
     <div class="bg-white rounded-2xl shadow-lg p-8">
         <div class="mb-6">
             <h2 class="font-display text-2xl text-slate-900 mb-2">
-                {{ $journalId ? 'Edit Journal Entry' : 'New Journal Entry' }}
+                {{ $journal->id ? 'Edit Journal Entry' : 'New Journal Entry' }}
             </h2>
             <p class="text-slate-500">Write your thoughts, ideas, and reflections.</p>
         </div>
 
         <form wire:submit.prevent="save" class="space-y-6">
+            {{-- Title --}}
+            <div>
+                <label for="title" class="block text-sm font-medium text-slate-700 mb-2">Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    wire:model="title"
+                    placeholder="Enter journal title..."
+                    class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all"
+                >
+                @error('title')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Description --}}
+            <div>
+                <label for="description" class="block text-sm font-medium text-slate-700 mb-2">
+                    Description <span class="text-slate-400 font-normal">(optional)</span>
+                </label>
+                <textarea
+                    id="description"
+                    wire:model="description"
+                    rows="2"
+                    placeholder="A brief description of this journal entry..."
+                    class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all resize-none"
+                ></textarea>
+                @error('description')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
             {{-- Date Picker --}}
             <div>
                 <label for="date" class="block text-sm font-medium text-slate-700 mb-2">Date</label>
@@ -44,7 +76,7 @@
                     type="submit"
                     class="bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25"
                 >
-                    {{ $journalId ? 'Update Entry' : 'Save Entry' }}
+                    {{ $journal->id ? 'Update Entry' : 'Save Entry' }}
                 </button>
             </div>
         </form>

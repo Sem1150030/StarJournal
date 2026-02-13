@@ -12,6 +12,8 @@ class Journal extends Model
 
     protected $fillable = [
         'user_id',
+        'title',
+        'description',
         'date',
         'content',
     ];
@@ -24,5 +26,7 @@ class Journal extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
 }
 

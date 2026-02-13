@@ -43,7 +43,7 @@
             </div>
 
             {{-- Journal Editor Component --}}
-            @livewire('journal-editor-component')
+            @livewire('journal-editor-component', ['journal' => $journal])
 
             {{-- Decorative Elements --}}
             <div class="mt-8 flex items-center justify-center gap-4 text-slate-400">

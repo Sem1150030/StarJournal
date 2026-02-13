@@ -18,5 +18,5 @@ Route::middleware(['guest'])->group(function () {
 
     Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-        Route::get('/journal/create', [JournalController::class, 'create'])->name('journal.create');
+        Route::get('/journal/create/{journal}', [JournalController::class, 'create'])->name('journal.create');
     });
