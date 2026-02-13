@@ -35,6 +35,7 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        $request->session()->regenerate();
 
         return redirect('/')->with('success', 'Welcome to StarJournal! Your account has been created.');
     }
