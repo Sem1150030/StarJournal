@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->date('date');
-            $table->longText('content');
+            $table->boolean('is_public')->default(false);
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('image_path')->nullable();
+            $table->enum('status', ['draft', 'published', 'private'])->default('draft');
+            $table->longText('content')->nullable();
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
