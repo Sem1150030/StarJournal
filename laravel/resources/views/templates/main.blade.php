@@ -28,33 +28,75 @@
                     <a href="{{ route('about') }}" class="text-slate-600 hover:text-violet-600 transition-colors">About</a>
                     <a href="#" class="text-slate-600 hover:text-violet-600 transition-colors">Contact</a>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#" class="text-slate-600 hover:text-violet-600 transition-colors">Sign in</a>
-                    <a href="#" class="bg-violet-600 hover:bg-violet-500 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
-                        Get Started
-                    </a>
-                </div>
+                @auth
+                    <div class="flex items-center space-x-4">
+                        <span class="text-slate-600">{{ Auth::user()->name }}</span>
+                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                            @csrf
+                            <button type="submit" class="text-slate-600 hover:text-violet-600 transition-colors cursor-pointer">
+                                Sign out
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('login') }}" class="text-slate-600 hover:text-violet-600 transition-colors">Sign in</a>
+                        <a href="{{ route('register') }}" class="bg-violet-600 hover:bg-violet-500 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                            Get Started
+                        </a>
+                    </div>
+                @endauth
             </div>
         </nav>
     </header>
 
-    <main class="flex-grow">
+    {{-- Snackbar/Toast Notifications --}}
+    <div id="snackbar-container" class="fixed top-24 right-6 z-50 flex flex-col gap-3">
         @if (session('success'))
-            <div class="max-w-6xl mx-auto px-6 mt-6">
-                <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg">
-                    {{ session('success') }}
-                </div>
+            <div class="snackbar snackbar-success flex items-center gap-3 px-5 py-4 rounded-lg shadow-lg bg-emerald-600 text-white transform translate-x-0 opacity-100 transition-all duration-300">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span class="text-sm font-medium">{{ session('success') }}</span>
+                <button type="button" onclick="this.parentElement.remove()" class="ml-2 hover:opacity-70 transition-opacity">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
         @endif
 
         @if (session('error'))
-            <div class="max-w-6xl mx-auto px-6 mt-6">
-                <div class="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
-                    {{ session('error') }}
-                </div>
+            <div class="snackbar snackbar-error flex items-center gap-3 px-5 py-4 rounded-lg shadow-lg bg-red-600 text-white transform translate-x-0 opacity-100 transition-all duration-300">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-sm font-medium">{{ session('error') }}</span>
+                <button type="button" onclick="this.parentElement.remove()" class="ml-2 hover:opacity-70 transition-opacity">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
         @endif
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const snackbars = document.querySelectorAll('.snackbar');
+            snackbars.forEach(function(snackbar) {
+                setTimeout(function() {
+                    snackbar.style.opacity = '0';
+                    snackbar.style.transform = 'translateX(100%)';
+                    setTimeout(function() {
+                        snackbar.remove();
+                    }, 300);
+                }, 5000);
+            });
+        });
+    </script>
+
+    <main class="flex-grow">
         @yield('content')
     </main>
 

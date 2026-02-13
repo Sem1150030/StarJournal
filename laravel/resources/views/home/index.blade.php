@@ -134,9 +134,15 @@
             <p class="text-slate-600 mb-8 max-w-xl mx-auto">
                 Join thousands of writers who are already sharing their stories on StarJournal.
             </p>
-            <a href="#" class="inline-block bg-violet-600 hover:bg-violet-500 text-white px-8 py-3 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25">
+            @auth
+                <a href="{{route('register')}}" class="inline-block bg-violet-600 hover:bg-violet-500 text-white px-8 py-3 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25">
+                    Write Your Post
+                </a>
+            @else
+            <a href="{{route('register')}}" class="inline-block bg-violet-600 hover:bg-violet-500 text-white px-8 py-3 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25">
                 Create Your Account
             </a>
+            @endauth
         </div>
     </section>
 @endsection
