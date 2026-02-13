@@ -136,6 +136,7 @@
     </footer>
 
     @stack('scripts')
+    @livewire('wire-elements-modal')
 </body>
 </html>
 

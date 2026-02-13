@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\indexController;
+use App\Http\Controllers\JournalController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,4 +18,5 @@ Route::middleware(['guest'])->group(function () {
 
     Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::get('/journal/create/{journal}', [JournalController::class, 'create'])->name('journal.create');
     });
