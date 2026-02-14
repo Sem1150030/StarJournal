@@ -28,7 +28,7 @@ class CreateJournalModal extends ModalComponent
 
         $this->closeModal();
 
-        return redirect()->route('journal.create', $journal->id)
+        return redirect()->route('journal.edit', $journal->id)
             ->with('success', 'Journal created! Start writing your entry.');
     }
 

@@ -24,7 +24,11 @@
                     <span class="text-xl font-semibold tracking-tight text-slate-900">StarJournal</span>
                 </a>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('index') }}" class="text-slate-600 hover:text-violet-600 transition-colors">Home</a>
+                    @auth()
+                    <a href="{{ route('dashboard.index') }}" class="text-slate-600 hover:text-violet-600 transition-colors">Dashboard</a>
+                    @else
+                        
+                    @endauth
                     <a href="{{ route('about') }}" class="text-slate-600 hover:text-violet-600 transition-colors">About</a>
                     <a href="#" class="text-slate-600 hover:text-violet-600 transition-colors">Contact</a>
                 </div>

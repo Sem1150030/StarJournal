@@ -16,6 +16,7 @@ class Journal extends Model
         'description',
         'date',
         'content',
+        'status'
     ];
 
     protected $casts = [
