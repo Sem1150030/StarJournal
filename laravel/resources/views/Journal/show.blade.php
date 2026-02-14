@@ -8,7 +8,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <nav class="flex items-center gap-2 text-sm text-slate-500 mb-3">
-                            <a href="{{ route('dashboard.index') }}" class="hover:text-violet-600 transition-colors">Dashboard</a>
+                            <a href="{{ route('index') }}" class="hover:text-violet-600 transition-colors">Home</a>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
@@ -31,15 +31,6 @@
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $statusColor }}">
                             {{ ucfirst($journal->status) }}
                         </span>
-                        <a
-                            href="{{ route('journal.edit', $journal->id) }}"
-                            class="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-4 py-2 rounded-full text-sm font-medium transition-all"
-                        >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                            </svg>
-                            Edit
-                        </a>
                     </div>
                 </div>
             </div>
@@ -48,20 +39,15 @@
         {{-- Content Section --}}
         <div class="max-w-4xl mx-auto px-6 py-10">
             <div class="bg-white rounded-2xl shadow-lg p-8">
-                {{-- Meta Info --}}
-                <div class="flex items-center gap-6 text-sm text-slate-500 mb-8 pb-6 border-b border-slate-200">
-                    <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        {{ $journal->date->format('F j, Y') }}
-                    </span>
-                    <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Updated {{ $journal->updated_at->diffForHumans() }}
-                    </span>
+                {{-- Author Info --}}
+                <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-200">
+                    <div class="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 font-semibold text-lg">
+                        {{ strtoupper(substr($journal->user->name, 0, 1)) }}
+                    </div>
+                    <div>
+                        <p class="font-medium text-slate-900">{{ $journal->user->name }}</p>
+                        <p class="text-sm text-slate-500">{{ $journal->date->format('F j, Y') }} · {{ $journal->updated_at->diffForHumans() }}</p>
+                    </div>
                 </div>
 
                 {{-- Journal Content --}}
@@ -77,12 +63,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                     Back to Dashboard
-                </a>
-                <a href="{{ route('journal.edit', $journal->id) }}" class="text-violet-600 hover:text-violet-500 transition-colors flex items-center gap-2">
-                    Edit this entry
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
                 </a>
             </div>
         </div>

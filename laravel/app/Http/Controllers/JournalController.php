@@ -27,8 +27,6 @@ class JournalController extends Controller
 
     public function show(Journal $journal)
     {
-        abort_if($journal->user_id !== auth()->id(), 403, 'Unauthorized access to this journal.');
-
         return view('journal.show', [
             'journal' => $journal,
         ]);
