@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\JournalController;
 use Illuminate\Support\Facades\Route;
@@ -18,5 +19,8 @@ Route::middleware(['guest'])->group(function () {
 
     Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-        Route::get('/journal/create/{journal}', [JournalController::class, 'create'])->name('journal.create');
+        Route::get('/journals/{journal}/edit', [JournalController::class, 'create'])->name('journal.edit');
+        Route::get('/journals', [JournalController::class, 'index'])->name('journal.index');
+        Route::get('/journals/{journal}', [JournalController::class, 'show'])->name('journal.show');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     });
